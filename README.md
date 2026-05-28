@@ -66,6 +66,27 @@
 - Любой клиент MySQL (phpMyAdmin, DBeaver, Workbench, командная строка)
 
 ### Шаг 1: Создание базы данных
-```sql
 CREATE DATABASE IF NOT EXISTS project_db;
 USE project_db;
+
+###Шаг 2: Создание таблиц и наполнение данными
+Выполните последовательно для каждой базы:
+# Для MySQL из командной строки
+mysql -u username -p project_db < database-1-vehicles/schema.sql
+mysql -u username -p project_db < database-1-vehicles/data.sql
+# И так для каждой базы
+Или используйте объединённые скрипты:
+mysql -u username -p project_db < sql-scripts/create_all.sql
+mysql -u username -p project_db < sql-scripts/insert_all.sql
+
+### Шаг 3: Выполнение запросов
+mysql -u username -p project_db < database-1-vehicles/queries.sql
+
+### Шаг 4: Проверка результатов
+Ожидаемые результаты для каждой задачи приведены в комментариях внутри файлов queries.sql.
+Используемые технологии:
+SQL (MySQL диалект)
+Рекурсивные запросы (WITH RECURSIVE)
+Агрегатные функции (GROUP_CONCAT, AVG, COUNT)
+Объединения (JOIN, LEFT JOIN)
+Подзапросы и CTE
