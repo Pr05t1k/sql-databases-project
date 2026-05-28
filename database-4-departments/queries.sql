@@ -1,3 +1,13 @@
+-- =====================================================
+-- База данных 4: Структура организации
+-- Решения задач
+-- =====================================================
+
+-- -----------------------------------------------------
+-- Задача 1
+-- Рекурсивно найти всех подчинённых Ивана Иванова
+-- (EmployeeID = 1) и его самого
+-- -----------------------------------------------------
 WITH RECURSIVE EmployeeHierarchy AS (
     -- Базовый уровень: сам Иван Иванов
     SELECT 
@@ -36,7 +46,12 @@ LEFT JOIN Tasks t ON eh.EmployeeID = t.AssignedTo
 LEFT JOIN Projects p ON t.ProjectID = p.ProjectID
 GROUP BY eh.EmployeeID, eh.Name, eh.ManagerID, d.DepartmentName, r.RoleName
 ORDER BY eh.Name;
+-- Ожидаемый результат: 30 строк (все сотрудники, подчиняющиеся Ивану Иванову)
 
+-- -----------------------------------------------------
+-- Задача 2
+-- То же + количество задач и прямых подчинённых
+-- -----------------------------------------------------
 WITH RECURSIVE EmployeeHierarchy AS (
     -- Базовый уровень: сам Иван Иванов
     SELECT 
@@ -85,7 +100,13 @@ LEFT JOIN Projects p ON t.ProjectID = p.ProjectID
 LEFT JOIN SubordinateCount sc ON eh.EmployeeID = sc.ManagerID
 GROUP BY eh.EmployeeID, eh.Name, eh.ManagerID, d.DepartmentName, r.RoleName, sc.TotalSubordinates
 ORDER BY eh.Name;
+-- Ожидаемый результат: 30 строк с колонкой TotalTasks и TotalSubordinates
 
+-- -----------------------------------------------------
+-- Задача 3
+-- Найти менеджеров с подчинёнными
+-- (рекурсивный подсчёт всех подчинённых)
+-- -----------------------------------------------------
 WITH RECURSIVE EmployeeHierarchy AS (
     -- Базовый уровень: все сотрудники
     SELECT 
